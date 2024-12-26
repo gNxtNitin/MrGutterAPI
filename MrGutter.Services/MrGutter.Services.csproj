@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MrGutter.Domain\MrGutter.Domain.csproj" />
+    <ProjectReference Include="..\MrGutter.Utility\MrGutter.Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="References\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="AuthLibrary">
+      <HintPath>References\AuthLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="DatabaseManager">
+      <HintPath>References\DatabaseManager.dll</HintPath>
+    </Reference>
+    <Reference Include="MenuManagementLib">
+      <HintPath>References\MenuManagementLib.dll</HintPath>
+    </Reference>
+    <Reference Include="PasswordManagementLibrary">
+      <HintPath>References\PasswordManagementLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="UserManagementLibrary">
+      <HintPath>References\UserManagementLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
