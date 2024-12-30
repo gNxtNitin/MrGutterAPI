@@ -15,8 +15,8 @@ namespace MrGutter.Services.IServices
         public Task<ResponseModel> GetRoleMaster(string? encReq);
         public Task<ResponseModel> GetRoleByUserId(string encReq);
         public Task<ResponseModel> CreateOrSetRoleMaster(RequestModel rq, char flag);
-        public Task<ResponseModel> GetUsers(string? encReq);
-        public Task<ResponseModel> CreateOrSetUser(RequestModel rq, char flag);
+        public Task<ResponseModel> GetUsers(string? userId);
+        public Task<ResponseModel> CreateOrSetUser(UserMasterReqModel rq);
         public Task<ResponseModel> CreateLogHistory(RequestModel req);
         public Task<ResponseModel> GetLogHistory();
     }

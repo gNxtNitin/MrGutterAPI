@@ -279,10 +279,9 @@ namespace MrGutter.Services.Services
             }
             return response;
         }
-        public async Task<ResponseModel> GetUsers(string? encReq)
+        public async Task<ResponseModel> GetUsers(string? userId)
         {
             ResponseModel response = new ResponseModel();
-            string userId = await encDcService.Decrypt(encReq);
             string flag = userId == null || userId == "" ? "G" : "I";
             try
             {
@@ -317,144 +316,130 @@ namespace MrGutter.Services.Services
 
             return await Task.FromResult(response);
         }
-        public async Task<ResponseModel> CreateOrSetUser(RequestModel req, char flag)
+        public async Task<ResponseModel> CreateOrSetUser(UserMasterReqModel req)
         {
             ResponseModel response = new ResponseModel();
             string connStr = UMSResources.GetConnectionString();
             try
             {
-                string json = await encDcService.Decrypt(req.V);
-                UserMasterReqModel rq = JsonConvert.DeserializeObject<UserMasterReqModel>(json);
-                rq.Password = await encDcService.Encrypt(rq.Password);
-
                 using (SqlConnection connection = new SqlConnection(connStr))
                 {
-                    connection.Open();
-                    using (SqlCommand command = connection.CreateCommand())
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand("sp_GetSetDeleteUsers", connection))
                     {
-                        command.CommandText = "sp_GetSetDeleteUsers";
                         command.CommandType = CommandType.StoredProcedure;
-                        SqlParameter parameter = new SqlParameter();
 
-                        parameter = new SqlParameter();
-                        parameter = command.Parameters.Add("@flag", SqlDbType.Char);
-                        parameter.Value = flag;
-                        parameter.Direction = ParameterDirection.Input;
+                        // Add the parameters required by the stored procedure
+                        command.Parameters.Add(new SqlParameter("@Flag", SqlDbType.Char)
+                        {
+                            Value = (object)req.Flag ?? "G"
+                        });
 
-                        parameter = new SqlParameter();
-                        parameter = command.Parameters.Add("@userId", SqlDbType.Int);
-                        parameter.Value = rq.UserId;
-                        parameter.Direction = ParameterDirection.Input;
+                        command.Parameters.Add(new SqlParameter("@userId", SqlDbType.Int)
+                        {
+                            Value = (object)req.UserId ?? 0
+                        });
+                        //command.Parameters.Add(new SqlParameter("@groupId", SqlDbType.Int)
+                        //{
+                        //    Value = (object)req.GroupId ?? 0
+                        //});
+                        command.Parameters.Add(new SqlParameter("@roleId", SqlDbType.Int)
+                        {
+                            Value = (object)req.RoleId ?? 0
+                        });
+                        //command.Parameters.Add(new SqlParameter("@userName", SqlDbType.NVarChar, 100)
+                        //{
+                        //    Value = (object)req.UserName ?? DBNull.Value
+                        //});
+                        command.Parameters.Add(new SqlParameter("@firstName", SqlDbType.NVarChar, 255)
+                        {
+                            Value = (object)req.FirstName ?? DBNull.Value
+                        });
+                        //command.Parameters.Add(new SqlParameter("@firstName", SqlDbType.NVarChar, 255)
+                        //{
+                        //    Value = (object)req.FirstName ?? DBNull.Value
+                        //});
+                        command.Parameters.Add(new SqlParameter("@lastName", SqlDbType.NVarChar, 255)
+                        {
+                            Value = (object)req.LastName ?? DBNull.Value
+                        });
+                        command.Parameters.Add(new SqlParameter("@mobile", SqlDbType.NVarChar, 255)
+                        {
+                            Value = (object)req.MobileNo ?? DBNull.Value
+                        });
 
-                        //parameter = new SqlParameter();
-                        //parameter = command.Parameters.Add("@groupId", SqlDbType.TinyInt);
-                        //parameter.Value = rq.GroupId;
-                        //parameter.Direction = ParameterDirection.Input;
+                        command.Parameters.Add(new SqlParameter("@email", SqlDbType.NVarChar, 255)
+                        {
+                            Value = (object)req.EmailID ?? DBNull.Value
+                        });
 
-                        parameter = new SqlParameter();
-                        parameter = command.Parameters.Add("@roleId", SqlDbType.TinyInt);
-                        parameter.Value = rq.RoleId;
-                        parameter.Direction = ParameterDirection.Input;
+                        command.Parameters.Add(new SqlParameter("@dob", SqlDbType.SmallDateTime, 255)
+                        {
+                            Value = (object)req.DOB ?? DBNull.Value
+                        });
+                        command.Parameters.Add(new SqlParameter("@password", SqlDbType.NVarChar, 255)
+                        {
+                            Value = (object)req.Password ?? DBNull.Value
+                        });
+                        command.Parameters.Add(new SqlParameter("@address1", SqlDbType.NVarChar, 255)
+                        {
+                            Value = (object)req.Address1 ?? DBNull.Value
+                        });
+                        command.Parameters.Add(new SqlParameter("@address2", SqlDbType.NVarChar, 255)
+                        {
+                            Value = (object)req.Address2 ?? DBNull.Value
+                        });
+                        command.Parameters.Add(new SqlParameter("@city", SqlDbType.NVarChar, 255)
+                        {
+                            Value = (object)req.City ?? DBNull.Value
+                        });
 
-                        //parameter = new SqlParameter();
-                        //parameter = command.Parameters.Add("@userName", SqlDbType.VarChar);
-                        //parameter.Value = rq.UserName;
-                        //parameter.Direction = ParameterDirection.Input;
+                        command.Parameters.Add(new SqlParameter("@state", SqlDbType.NVarChar, 255)
+                        {
+                            Value = (object)req.State ?? DBNull.Value
+                        });
+                        command.Parameters.Add(new SqlParameter("@pin", SqlDbType.NVarChar, 255)
+                        {
+                            Value = (object)req.PinCode ?? DBNull.Value
+                        });
+                        command.Parameters.Add(new SqlParameter("@filepath", SqlDbType.NVarChar, 255)
+                        {
+                            Value = (object)req.FilePath ?? DBNull.Value
+                        });
+                        command.Parameters.Add(new SqlParameter("@isActive", SqlDbType.NVarChar, 255)
+                        {
+                            Value = (object)req.IsActive ?? DBNull.Value
+                        });
+                        command.Parameters.Add(new SqlParameter("@createdBy", SqlDbType.Int)
+                        {
+                            Value = (object)req.CreatedBy ?? 0
+                        });
+                        // Output parameters
+                        SqlParameter retParam = new SqlParameter("@ret", SqlDbType.Int)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        command.Parameters.Add(retParam);
 
-                        parameter = new SqlParameter();
-                        parameter = command.Parameters.Add("@firstName", SqlDbType.VarChar);
-                        parameter.Value = rq.FirstName;
-                        parameter.Direction = ParameterDirection.Input;
+                        SqlParameter errorMsgParam = new SqlParameter("@errorMsg", SqlDbType.NVarChar, 200)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        command.Parameters.Add(errorMsgParam);
 
-                        parameter = new SqlParameter();
-                        parameter = command.Parameters.Add("@lastName", SqlDbType.VarChar);
-                        parameter.Value = rq.LastName;
-                        parameter.Direction = ParameterDirection.Input;
+                        // Execute the stored procedure
+                        await command.ExecuteNonQueryAsync();
 
-                        parameter = new SqlParameter();
-                        parameter = command.Parameters.Add("@mobile", SqlDbType.VarChar);
-                        parameter.Value = rq.MobileNo;
-                        parameter.Direction = ParameterDirection.Input;
-
-                        parameter = new SqlParameter();
-                        parameter = command.Parameters.Add("@email", SqlDbType.VarChar);
-                        parameter.Value = rq.EmailID;
-                        parameter.Direction = ParameterDirection.Input;
-
-                        parameter = new SqlParameter();
-                        parameter = command.Parameters.Add("@dob", SqlDbType.SmallDateTime);
-                        parameter.Value = rq.DOB;
-                        parameter.Direction = ParameterDirection.Input;
-
-                        parameter = new SqlParameter();
-                        parameter = command.Parameters.Add("@password", SqlDbType.NVarChar);
-                        parameter.Value = rq.Password;
-                        parameter.Direction = ParameterDirection.Input;
-
-                        parameter = new SqlParameter();
-                        parameter = command.Parameters.Add("@address1", SqlDbType.VarChar);
-                        parameter.Value = rq.Address1;
-                        parameter.Direction = ParameterDirection.Input;
-
-                        parameter = new SqlParameter();
-                        parameter = command.Parameters.Add("@address2", SqlDbType.VarChar);
-                        parameter.Value = rq.Address2;
-                        parameter.Direction = ParameterDirection.Input;
-
-                        parameter = new SqlParameter();
-                        parameter = command.Parameters.Add("@city", SqlDbType.VarChar);
-                        parameter.Value = rq.City;
-                        parameter.Direction = ParameterDirection.Input;
-
-                        parameter = new SqlParameter();
-                        parameter = command.Parameters.Add("@state", SqlDbType.VarChar);
-                        parameter.Value = rq.State;
-                        parameter.Direction = ParameterDirection.Input;
-
-                        parameter = new SqlParameter();
-                        parameter = command.Parameters.Add("@pin", SqlDbType.VarChar);
-                        parameter.Value = rq.PinCode;
-                        parameter.Direction = ParameterDirection.Input;
-
-                        parameter = new SqlParameter();
-                        parameter = command.Parameters.Add("@pan", SqlDbType.VarChar);
-                        parameter.Value = rq.PanCardNo;
-                        parameter.Direction = ParameterDirection.Input;
-
-                        parameter = new SqlParameter();
-                        parameter = command.Parameters.Add("@filePath", SqlDbType.VarChar);
-                        parameter.Value = rq.FilePath;
-                        parameter.Direction = ParameterDirection.Input;
-
-                        parameter = new SqlParameter();
-                        parameter = command.Parameters.Add("@isActive", SqlDbType.Bit);
-                        parameter.Value = rq.IsActive;
-                        parameter.Direction = ParameterDirection.Input;
-
-                        parameter = new SqlParameter();
-                        parameter = command.Parameters.Add("@createdBy", SqlDbType.Int);
-                        parameter.Value = rq.CreatedBy;
-                        parameter.Direction = ParameterDirection.Input;
-
-                        parameter = new SqlParameter();
-                        parameter = command.Parameters.Add("@ret", SqlDbType.Int);
-                        parameter.Direction = ParameterDirection.Output;
-
-                        parameter = new SqlParameter();
-                        parameter = command.Parameters.Add("@errorMsg", SqlDbType.VarChar, 200);
-                        parameter.Direction = ParameterDirection.Output;
-
-                        int res = await command.ExecuteNonQueryAsync();
-                        response.code = Convert.ToInt32(command.Parameters["@ret"].Value);
-                        response.msg = command.Parameters["@errorMsg"].Value.ToString();
+                        // Retrieve output parameters
+                        response.code = Convert.ToInt32(retParam.Value);
+                        response.msg = Convert.ToString(errorMsgParam.Value);
                     }
                 }
             }
             catch (Exception ex)
             {
                 response.code = -1;
-                response.data = ex.Message;
-                // _logger.LogError("SendForgotPasswordEmail", ex);
+                response.msg = ex.Message;
             }
             return response;
         }
