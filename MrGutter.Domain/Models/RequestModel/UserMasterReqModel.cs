@@ -11,7 +11,8 @@ namespace MrGutter.Domain.Models.RequestModel
         public int UserId { get; set; } = 0;
         //public int GroupId { get; set; } = 0;
         public int RoleId { get; set; } = 2;
-        // public string? UserName { get; set; }
+        
+        //public string? UserName { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? MobileNo { get; set; }
@@ -21,6 +22,7 @@ namespace MrGutter.Domain.Models.RequestModel
         public string? Address1 { get; set; }
         public string? Address2 { get; set; }
         public string? City { get; set; }
+        public string? Flag { get; set; }
         public string? State { get; set; }
         public string? PinCode { get; set; }
         public string? PanCardNo { get; set; }

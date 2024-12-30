@@ -105,25 +105,25 @@ namespace MrGutter.WebAPI.Controllers
             return result == null ? NotFound() : Ok(result);
         }
         [HttpPost("CreateOrSetUser")]
-        public async Task<IActionResult> CreateOrSetUsers(RequestModel req)
+        public async Task<IActionResult> CreateOrSetUsers(UserMasterReqModel req)
         {
-            var result = await _userManager.CreateOrSetUser(req, 'C');
+            var result = await _userManager.CreateOrSetUser(req);
             return Ok(result);
         }
         //[Authorize(Roles = "SuperAdmin")]
-        [HttpPut("UpdateUser")]
-        public async Task<IActionResult> UpdateUser([FromBody] RequestModel req)
-        {
-            var result = await _userManager.CreateOrSetUser(req, 'U');
-            return Ok(result);
-        }
-       // [Authorize(Roles = "SuperAdmin")]
-        [HttpDelete("DeleteUser")]
-        public async Task<IActionResult> DeleteUser([FromBody] RequestModel reqModel)
-        {
-            var result = await _userManager.CreateOrSetUser(reqModel, 'D');
-            return Ok(result);
-        }
+       // [HttpPut("UpdateUser")]
+       // public async Task<IActionResult> UpdateUser([FromBody] RequestModel req)
+       // {
+       //     var result = await _userManager.CreateOrSetUser(req, 'U');
+       //     return Ok(result);
+       // }
+       //// [Authorize(Roles = "SuperAdmin")]
+       // [HttpDelete("DeleteUser")]
+       // public async Task<IActionResult> DeleteUser([FromBody] RequestModel reqModel)
+       // {
+       //     var result = await _userManager.CreateOrSetUser(reqModel, 'D');
+       //     return Ok(result);
+       // }
         #endregion
         #region "Loging"
         //[Authorize]
