@@ -279,10 +279,9 @@ namespace MrGutter.Services.Services
             }
             return response;
         }
-        public async Task<ResponseModel> GetUsers(string? encReq)
+        public async Task<ResponseModel> GetUsers(string? userId)
         {
             ResponseModel response = new ResponseModel();
-            string userId = await encDcService.Decrypt(encReq);
             string flag = userId == null || userId == "" ? "G" : "I";
             try
             {

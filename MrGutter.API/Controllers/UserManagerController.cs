@@ -99,9 +99,9 @@ namespace MrGutter.WebAPI.Controllers
         #region "UserMaster"
         //[Authorize]
         [HttpGet("GetUsers")]
-        public async Task<IActionResult> GetUsers(string? encReq)
+        public async Task<IActionResult> GetUsers(string? userId)
         {
-            var result = await _userManager.GetUsers(encReq);
+            var result = await _userManager.GetUsers(userId);
             return result == null ? NotFound() : Ok(result);
         }
         [HttpPost("CreateOrSetUser")]
@@ -110,20 +110,7 @@ namespace MrGutter.WebAPI.Controllers
             var result = await _userManager.CreateOrSetUser(req);
             return Ok(result);
         }
-        //[Authorize(Roles = "SuperAdmin")]
-       // [HttpPut("UpdateUser")]
-       // public async Task<IActionResult> UpdateUser([FromBody] RequestModel req)
-       // {
-       //     var result = await _userManager.CreateOrSetUser(req, 'U');
-       //     return Ok(result);
-       // }
-       //// [Authorize(Roles = "SuperAdmin")]
-       // [HttpDelete("DeleteUser")]
-       // public async Task<IActionResult> DeleteUser([FromBody] RequestModel reqModel)
-       // {
-       //     var result = await _userManager.CreateOrSetUser(reqModel, 'D');
-       //     return Ok(result);
-       // }
+       
         #endregion
         #region "Loging"
         //[Authorize]
