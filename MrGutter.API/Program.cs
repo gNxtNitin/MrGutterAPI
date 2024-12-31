@@ -53,7 +53,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Mr Gutter", Version = "V1.0" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Mr Quote", Version = "V1.0" });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
