@@ -269,9 +269,20 @@
 /MrGutter.Utility/obj/Debug/net6.0/MrGutter.Utility.csproj.CoreCompileInputs.cache
 /MrGutter.Utility/obj/Debug/net6.0/MrGutter.Utility.pdb
 /MrGutter.Utility/obj/Debug/net6.0/MrGutter.Utility.dll
+<<<<<<< HEAD
+/.vs/MrGutter.API/FileContentIndex/ddf993a1-9c0c-44c9-a67a-582ab468794e.vsidx
+/.vs/MrGutter.API/FileContentIndex/fd9b79ed-14a4-49fa-9f77-20e0d06aff20.vsidx
+/MrGutter.API/bin/Debug/net6.0/DinkToPdf.dll
+/.gitignore
+/.gitignore
+=======
 /.vs/MrGutter.API/FileContentIndex/7cef6d4e-3139-4b14-9322-918b4cd98e7a.vsidx
 /.vs/MrGutter.API/FileContentIndex/15bbd9da-61ad-4ea2-8a30-dc7ff1b65c17.vsidx
 /.vs/MrGutter.API/FileContentIndex/bf11c1ca-812a-4ecb-95c6-d29c39a3edca.vsidx
-/.vs/MrGutter.API/FileContentIndex/aafde3a3-e367-4b56-ab3d-099e8116d104.vsidx
-/.vs/ProjectEvaluation/mrgutter.api.metadata.v7.bin
-/.vs/ProjectEvaluation/mrgutter.api.projects.v7.bin
+/MrGutter.Services/Services/UserManager.cs
+/.vs/MrGutter.API/FileContentIndex/83f5e640-b383-42ee-920a-a48efcbca92d.vsidx
+/.vs/MrGutter.API/FileContentIndex/8f95d8ef-a657-4d1d-84f1-db2a32799756.vsidx
+>>>>>>> b2a644eea82b1daf990ab17e18b147eb7ae89ec1
+/.vs/MrGutter.API/FileContentIndex/50f9d891-09a3-4735-8940-41b96cb317fa.vsidx
+/.vs/MrGutter.API/FileContentIndex/60d327bf-489e-450d-b6df-96fed52ed0bc.vsidx
+/.vs/MrGutter.API/FileContentIndex/819079ea-aaf1-46b4-b586-7908fe87ef3c.vsidx
