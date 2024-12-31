@@ -64,6 +64,7 @@ namespace MrGutter.WebAPI.Controllers
             var result = await _userManager.GetRoleMaster(encReq);
             return result == null ? NotFound() : Ok(result);
         }
+        //[Authorize]
         [HttpGet("GetRoleByUserId")]
         public async Task<IActionResult> GetRoleByUserId(string encReq)
         {
@@ -97,7 +98,7 @@ namespace MrGutter.WebAPI.Controllers
         #endregion
 
         #region "UserMaster"
-        //[Authorize]
+        [Authorize]
         [HttpGet("GetUsers")]
         public async Task<IActionResult> GetUsers(string? userId)
         {
@@ -110,8 +111,26 @@ namespace MrGutter.WebAPI.Controllers
             var result = await _userManager.CreateOrSetUser(req);
             return Ok(result);
         }
-       
         #endregion
+
+        #region "CompanyMaster"
+        [Authorize]
+        [HttpGet("GetCompany")]
+        public async Task<IActionResult> GetCompany(string? companyId)
+        {
+            var result = await _userManager.GetCompany(companyId);
+            return result == null ? NotFound() : Ok(result);
+        }
+        [Authorize]
+        [HttpPost("CreateOrSetCompany")]
+        public async Task<IActionResult> CreateOrSetCompany(CompanyReqModel req)
+        {
+            var result = await _userManager.CreateOrSetCompany(req);
+            return Ok(result);
+        }
+        #endregion
+
+
         #region "Loging"
         //[Authorize]
         [HttpPost("CreateLogHistory")]

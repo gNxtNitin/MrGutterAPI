@@ -11,6 +11,6 @@ namespace MrGutter.Domain.Models.RequestModel
         public string? MobileOrEmail { get; set; }
         public string? Password { get; set; }
         public string? VerificationCode { get; set; }
-        public Boolean IsResendOTP { get; set; } = false;
+        public bool IsResendOTP { get; set; } = false;
     }
 }
