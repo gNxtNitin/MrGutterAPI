@@ -359,3 +359,17 @@
 /.vs/MrQuote.API/v17/.futdcache.v2
 /.vs/ProjectEvaluation/mrquote.api.metadata.v7.bin
 /.vs/ProjectEvaluation/mrquote.api.projects.v7.bin
+/MrQuote.API/obj/Debug/net6.0/MrQuote.API.AssemblyInfo.cs
+/MrQuote.API/obj/Debug/net6.0/MrQuote.API.GeneratedMSBuildEditorConfig.editorconfig
+/MrQuote.API/obj/Debug/net6.0/staticwebassets.removed.txt
+/MrQuote.Domain/obj/Debug/net6.0/MrQuote.Domain.AssemblyInfo.cs
+/MrQuote.Domain/obj/Debug/net6.0/MrQuote.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/MrQuote.Domain/obj/MrQuote.Domain.csproj.nuget.g.props
+/MrQuote.Utility/obj/Debug/net6.0/MrQuote.Utility.AssemblyInfo.cs
+/MrQuote.Utility/obj/Debug/net6.0/MrQuote.Utility.GeneratedMSBuildEditorConfig.editorconfig
+/MrQuote.Services/obj/Debug/net6.0/MrQuote.Services.AssemblyInfo.cs
+/MrQuote.Services/obj/Debug/net6.0/MrQuote.Services.GeneratedMSBuildEditorConfig.editorconfig
+/.vs/MrQuote.API/FileContentIndex/959764f9-e027-40d4-924c-abdc27f3ff4f.vsidx
+/MrQuote.API/obj/MrQuote.API.csproj.nuget.g.props
+/MrQuote.Services/obj/MrQuote.Services.csproj.nuget.g.props
+/MrQuote.Utility/obj/MrQuote.Utility.csproj.nuget.g.props
