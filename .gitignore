@@ -1,8 +1,14 @@
 ﻿################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
-bin/
-obj/
+/MrGutter.API/obj/
+/MrGutter.Domain/obj/
+/MrGutter.Services/obj/
+/MrGutter.Utility/obj/
+/MrGutter.API/bin/
+/MrGutter.Domain/bin/
+/MrGutter.Services/bin/
+/MrGutter.Utility/bin/
 /.vs/MrQuoteAPI/FileContentIndex/459d74a9-fb76-4a48-886b-892d4590dc3f.vsidx
 /.vs/MrQuoteAPI/FileContentIndex/13215692-3d2c-4fe0-b38f-cd0f55f769cd.vsidx
 /.vs/MrQuoteAPI/FileContentIndex/63836d57-9516-44f9-9db8-f55f5abb994f.vsidx
