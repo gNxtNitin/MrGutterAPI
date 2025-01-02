@@ -1,0 +1,15 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/ProjectEvaluation/mrquote.api.metadata.v9.bin
+/MrQuote.API/obj/
+/MrQuote.Domain/obj/
+/MrQuote.Services/obj/
+/MrQuote.Utility/obj/
+/MrQuote.API/bin/
+/MrQuote.Domain/bin/
+/MrQuote.Services/bin/
+/MrQuote.Utility/bin/
+/.vs/MrQuoteAPI/FileContentIndex/
+/.vs/MrQuote.API/v17/DocumentLayout.backup.json
