@@ -1,2 +1,0 @@
-# MrQuoteAPI
-Mr. Gutter API
