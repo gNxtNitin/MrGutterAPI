@@ -352,3 +352,7 @@
 /.vs/MrQuote.API/v17/.futdcache.v2
 /.vs/ProjectEvaluation/mrquote.api.metadata.v7.bin
 /.vs/ProjectEvaluation/mrquote.api.projects.v7.bin
+/MrQuote.API/obj/Debug/net6.0/MrQuote.API.AssemblyInfo.cs
+/MrQuote.Services/obj/Debug/net6.0/MrQuote.Services.AssemblyInfo.cs
+/MrQuote.Utility/obj/Debug/net6.0/MrQuote.Utility.AssemblyInfo.cs
+/.vs/MrQuote.API/FileContentIndex/1a780e42-f222-4504-a3f4-3bd328bee602.vsidx
