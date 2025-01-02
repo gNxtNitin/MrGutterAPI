@@ -1,14 +1,14 @@
 
-using MrGutter.Domain;
-using MrGutter.Services.IServices;
-using MrGutter.Services.Services;
-using MrGutter.Utility;
+using MrQuote.Domain;
+using MrQuote.Services.IServices;
+using MrQuote.Services.Services;
+using MrQuote.Utility;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using MrGutter.WebAPI;
+using MrQuote.WebAPI;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using AuthLibrary.Interface;
 using AuthLibrary;
@@ -106,5 +106,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-UMSResources.configuration = app.Configuration;
+MrQuoteResources.configuration = app.Configuration;
 app.Run();

@@ -1,12 +1,12 @@
 ﻿using System;
-using MrGutter.Domain.Models;
-using MrGutter.Domain.Models.RequestModel;
+using MrQuote.Domain.Models;
+using MrQuote.Domain.Models.RequestModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MrGutter.Services.IServices
+namespace MrQuote.Services.IServices
 {
     public interface IAccountService
     {

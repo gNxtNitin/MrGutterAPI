@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MrGutter.Services.IServices
+namespace MrQuote.Services.IServices
 {
     public interface IJwtAuthService
     {

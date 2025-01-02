@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "MrGutter.API": {
+    "MrQuote.API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

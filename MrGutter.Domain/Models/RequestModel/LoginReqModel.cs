@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MrGutter.Domain.Models.RequestModel
+namespace MrQuote.Domain.Models.RequestModel
 {
     public class LoginReqModel
     {

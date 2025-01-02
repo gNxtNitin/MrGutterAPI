@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MrGutter.API", "MrGutter.API\MrGutter.API.csproj", "{4B40F54F-2680-40EE-852F-23FA49B17B60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MrQuote.API", "MrGutter.API\MrQuote.API.csproj", "{4B40F54F-2680-40EE-852F-23FA49B17B60}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MrGutter.Domain", "MrGutter.Domain\MrGutter.Domain.csproj", "{E61FCE59-A664-4EDE-9523-6C5219C39629}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MrQuote.Domain", "MrGutter.Domain\MrQuote.Domain.csproj", "{E61FCE59-A664-4EDE-9523-6C5219C39629}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MrGutter.Services", "MrGutter.Services\MrGutter.Services.csproj", "{A3977E1A-A688-4D2F-890D-FABC29239C6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MrQuote.Services", "MrGutter.Services\MrQuote.Services.csproj", "{A3977E1A-A688-4D2F-890D-FABC29239C6C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MrGutter.Utility", "MrGutter.Utility\MrGutter.Utility.csproj", "{8707FECE-5413-47CC-B858-26938CC59B6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MrQuote.Utility", "MrGutter.Utility\MrQuote.Utility.csproj", "{8707FECE-5413-47CC-B858-26938CC59B6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

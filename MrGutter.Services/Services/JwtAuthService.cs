@@ -7,9 +7,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using MrGutter.Services.IServices;
+using MrQuote.Services.IServices;
 
-namespace MrGutter.Services.Services
+namespace MrQuote.Services.Services
 {
     //New
     public class JwtAuthService : IJwtAuthService

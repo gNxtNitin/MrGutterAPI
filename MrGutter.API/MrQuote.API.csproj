@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MrGutter.Services\MrGutter.Services.csproj" />
+    <ProjectReference Include="..\MrGutter.Services\MrQuote.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>

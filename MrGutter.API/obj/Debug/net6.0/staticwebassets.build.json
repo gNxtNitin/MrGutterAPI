@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "WRX+RcuG58Dg9aaVeZWom6vC6aJNe6r/5aH86+Sa6/w=",
-  "Source": "MrGutter.API",
-  "BasePath": "_content/MrGutter.API",
+  "Hash": "kgTXGMGAM26MCWUxMMyTOdPGzPIBmyaHOug13jsbu7s=",
+  "Source": "MrQuote.API",
+  "BasePath": "_content/MrQuote.API",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MrGutter.Domain.Models.RequestModel;
-using MrGutter.Services.IServices;
+using MrQuote.Domain.Models.RequestModel;
+using MrQuote.Services.IServices;
 
-namespace MrGutter.WebAPI.Controllers
+namespace MrQuote.WebAPI.Controllers
 {
     
     [Route("api/[controller]")]

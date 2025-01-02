@@ -1,8 +1,8 @@
-﻿using MrGutter.Domain;
-using MrGutter.Domain.Models;
-using MrGutter.Domain.Models.RequestModel;
-using MrGutter.Services.IServices;
-using MrGutter.Utility;
+﻿using MrQuote.Domain;
+using MrQuote.Domain.Models;
+using MrQuote.Domain.Models.RequestModel;
+using MrQuote.Services.IServices;
+using MrQuote.Utility;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -12,7 +12,7 @@ using System.Data.SqlClient;
 
 
 
-namespace MrGutter.Services.Services
+namespace MrQuote.Services.Services
 {
     public class AccountService : IAccountService
     {
@@ -41,7 +41,7 @@ namespace MrGutter.Services.Services
                 // rq.Password = await encDcService.Encrypt(rq.Password);
 
                 DataSet ds = new DataSet();
-                string connStr = UMSResources.GetConnectionString();
+                string connStr = MrQuoteResources.GetConnectionString();
                 ArrayList arrList = new ArrayList();
                 SP.spArgumentsCollection(arrList, "@MobileOrEmailId", rq.MobileOrEmail, "VARCHAR", "I");
 
@@ -95,7 +95,7 @@ namespace MrGutter.Services.Services
             UserMasterReqModel usermodel = JsonConvert.DeserializeObject<UserMasterReqModel>(json);
             RequestModel req = new RequestModel();
             req.MobileOrEmail = usermodel.EmailID;
-            string connStr = UMSResources.GetConnectionString();
+            string connStr = MrQuoteResources.GetConnectionString();
             ResponseModel response = new ResponseModel();
             try
             {
@@ -140,7 +140,7 @@ namespace MrGutter.Services.Services
                             string encverificationcode = await encDcService.Encrypt(verificationCode);
                             string encemail = await encDcService.Encrypt(req.MobileOrEmail);
 
-                            var url = UMSResources.configuration.GetSection("hosting:baseurl").Value;
+                            var url = MrQuoteResources.configuration.GetSection("hosting:baseurl").Value;
                             //string verificationurl = $"<a href='{url+"Account/ValidateOtp?Otp="+ encverificationcode}'>Please verify your email</a>";
                             string verificationurl = $"<a href='{url + "Account/ValidateOtp?Otp=" + encverificationcode + "&email=" + req.MobileOrEmail}'>Please verify your email</a>";
                             System.IO.StreamReader file = new System.IO.StreamReader("VerificationCode.html");
@@ -167,7 +167,7 @@ namespace MrGutter.Services.Services
             string json = await encDcService.Decrypt(encReq.V);
             RequestModel req = JsonConvert.DeserializeObject<RequestModel>(json);
 
-            string connStr = UMSResources.GetConnectionString();
+            string connStr = MrQuoteResources.GetConnectionString();
             ResponseModel response = new ResponseModel();
             try
             {
@@ -253,7 +253,7 @@ namespace MrGutter.Services.Services
                 RequestModel req = JsonConvert.DeserializeObject<RequestModel>(json);
 
                 // Check if the email exists in the userMaster table
-                string connStr = UMSResources.GetConnectionString();
+                string connStr = MrQuoteResources.GetConnectionString();
                 using (SqlConnection connection = new SqlConnection(connStr))
                 {
                     await connection.OpenAsync();
@@ -290,7 +290,7 @@ namespace MrGutter.Services.Services
 
 
               //  string encemail = await encDcService.Encrypt(req.MobileOrEmail);
-                var url = UMSResources.configuration.GetSection("hosting:baseurl").Value;
+                var url = MrQuoteResources.configuration.GetSection("hosting:baseurl").Value;
                 string resetPasswordUrl = $"<a href='{url + "Account/ChangePassword?email=" + req.MobileOrEmail}'>SET PASSWORD</a>";
                 System.IO.StreamReader file = new System.IO.StreamReader("ResetPassword.html");
                 string _body = await file.ReadToEndAsync();
@@ -313,7 +313,7 @@ namespace MrGutter.Services.Services
         public async Task<ResponseModel> ResetPassword(RequestModel req)
         {
             ResponseModel response = new ResponseModel();
-            string connStr = UMSResources.GetConnectionString();
+            string connStr = MrQuoteResources.GetConnectionString();
             try
             {
                 //string json = await encDcService.Decrypt(req.V);
@@ -363,7 +363,7 @@ namespace MrGutter.Services.Services
         }
         private static async void ManageLoginHistroy(int userId)
         {
-            string connStr = UMSResources.GetConnectionString();
+            string connStr = MrQuoteResources.GetConnectionString();
             ResponseModel response = new ResponseModel();
             try
             {

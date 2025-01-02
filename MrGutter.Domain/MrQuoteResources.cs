@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MrGutter.Domain
+namespace MrQuote.Domain
 {
-    public class UMSResources
+    public class MrQuoteResources
     {
         public static IConfiguration? configuration { get; set; }
         public static string GetConnectionString(string? name = null)

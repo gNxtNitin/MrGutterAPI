@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MrGutter.Domain
+namespace MrQuote.Domain
 {
     public interface IMiscDataSetting
     {

@@ -5,19 +5,19 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MrGutter.Domain.Models;
-using MrGutter.Domain;
-using MrGutter.Services.IServices;
+using MrQuote.Domain.Models;
+using MrQuote.Domain;
+using MrQuote.Services.IServices;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using MrGutter.Utility;
+using MrQuote.Utility;
 using Newtonsoft.Json;
-using MrGutter.Domain.Models.RequestModel;
+using MrQuote.Domain.Models.RequestModel;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 using UserManagementLibrary;
 
-namespace MrGutter.Services.Services
+namespace MrQuote.Services.Services
 {
     public class UserManagerServiceLib : IUserManagerServiceLib
     {
@@ -38,7 +38,7 @@ namespace MrGutter.Services.Services
         public async Task<ResponseModel> GetGroupMaster(string? encReq)
         {
             ResponseModel response = new ResponseModel();
-            string connStr = UMSResources.GetConnectionString();
+            string connStr = MrQuoteResources.GetConnectionString();
             try
             {
                 string groupId = await encDcService.Decrypt(encReq);
@@ -78,7 +78,7 @@ namespace MrGutter.Services.Services
         public async Task<ResponseModel> CreateOrSetGroupMaster(RequestModel encReq, char flag)
         {
             ResponseModel response = new ResponseModel();
-            string connStr = UMSResources.GetConnectionString();
+            string connStr = MrQuoteResources.GetConnectionString();
             try
             {
                 string json = await encDcService.Decrypt(encReq.V);
@@ -150,7 +150,7 @@ namespace MrGutter.Services.Services
             try
             {
                 DataSet ds = new DataSet();
-                string connStr = UMSResources.GetConnectionString();
+                string connStr = MrQuoteResources.GetConnectionString();
                 ArrayList arrList = new ArrayList();
                 SP.spArgumentsCollection(arrList, "@Flag", flag, "CHAR", "I");
                 SP.spArgumentsCollection(arrList, "@RoleId", roleId ?? "0", "INT", "I");
@@ -187,7 +187,7 @@ namespace MrGutter.Services.Services
             try
             {
                 DataSet ds = new DataSet();
-                string connStr = UMSResources.GetConnectionString();
+                string connStr = MrQuoteResources.GetConnectionString();
                 ArrayList arrList = new ArrayList();
                 SP.spArgumentsCollection(arrList, "@Flag", flag, "CHAR", "I");
                 SP.spArgumentsCollection(arrList, "@UserId", userId ?? "0", "INT", "I");
@@ -219,7 +219,7 @@ namespace MrGutter.Services.Services
         public async Task<ResponseModel> CreateOrSetRoleMaster(RequestModel encReq, char flag)
         {
             ResponseModel response = new ResponseModel();
-            string connStr = UMSResources.GetConnectionString();
+            string connStr = MrQuoteResources.GetConnectionString();
             try
             {
                 string json = await encDcService.Decrypt(encReq.V);
@@ -306,7 +306,7 @@ namespace MrGutter.Services.Services
         public async Task<ResponseModel> CreateOrSetUser(RequestModel req, char flag)
         {
             ResponseModel response = new ResponseModel();
-            string connStr = UMSResources.GetConnectionString();
+            string connStr = MrQuoteResources.GetConnectionString();
             try
             {
                 string json = await encDcService.Decrypt(req.V);
@@ -361,7 +361,7 @@ namespace MrGutter.Services.Services
         public async Task<ResponseModel> CreateLogHistory(RequestModel req)
         {
             ResponseModel response = new ResponseModel();
-            string connStr = UMSResources.GetConnectionString();
+            string connStr = MrQuoteResources.GetConnectionString();
             try
             {
                 string json = await encDcService.Decrypt(req.V);
@@ -425,7 +425,7 @@ namespace MrGutter.Services.Services
             try
             {
                 DataSet ds = new DataSet();
-                string connStr = UMSResources.GetConnectionString();
+                string connStr = MrQuoteResources.GetConnectionString();
                 ArrayList arrList = new ArrayList();
                 SP.spArgumentsCollection(arrList, "@Flag", "G", "CHAR", "I");
                 SP.spArgumentsCollection(arrList, "@Ret", "", "INT", "O");

@@ -1,4 +1,4 @@
-namespace MrGutter.API
+namespace MrQuote.API
 {
     public class WeatherForecast
     {

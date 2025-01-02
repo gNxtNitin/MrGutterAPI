@@ -9,7 +9,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using JsonSerializer = Newtonsoft.Json.JsonSerializer;
-namespace MrGutter.Domain
+namespace MrQuote.Domain
 {
     public class MiscDataSetting : IMiscDataSetting
     {
@@ -66,7 +66,7 @@ namespace MrGutter.Domain
         public async Task<DataTable> GetDataTable(string query)
         {
             DataTable dt = new DataTable();
-            string connStr = UMSResources.GetConnectionString();
+            string connStr = MrQuoteResources.GetConnectionString();
             try
             {
                 using (SqlConnection connection = new SqlConnection(connStr))
@@ -107,7 +107,7 @@ namespace MrGutter.Domain
         public async Task<DataSet> GetDataSet(string query)
         {
             DataSet ds = new DataSet();
-            string connStr = UMSResources.GetConnectionString();
+            string connStr = MrQuoteResources.GetConnectionString();
             try
             {
                 using (SqlConnection connection = new SqlConnection(connStr))
@@ -128,7 +128,7 @@ namespace MrGutter.Domain
         public async Task<int> ExecuteNonQuery(string query)
         {
             int result = 0;
-            string connStr = UMSResources.GetConnectionString();
+            string connStr = MrQuoteResources.GetConnectionString();
             try
             {
                 using (SqlConnection connection = new SqlConnection(connStr))
@@ -148,7 +148,7 @@ namespace MrGutter.Domain
         public void ExecuteNonQueryNonAsync(string query)
         {
             int result = 0;
-            string connStr = UMSResources.GetConnectionString();
+            string connStr = MrQuoteResources.GetConnectionString();
             try
             {
                 using (SqlConnection connection = new SqlConnection(connStr))

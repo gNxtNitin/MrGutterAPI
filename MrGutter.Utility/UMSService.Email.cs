@@ -2,9 +2,9 @@
 using System.Data;
 using System.Net.Mail;
 using System.Net;
-using MrGutter.Domain;
+using MrQuote.Domain;
 
-namespace MrGutter.Utility
+namespace MrQuote.Utility
 {
     public class UmSService : IUMSService
     {
@@ -43,14 +43,14 @@ namespace MrGutter.Utility
         }
         public async Task SendEmail(string toEmailIds, string subject, string body, string token = "")
         {
-            if (UMSResources.configuration.GetSection("ByPass:sendMail").Value == "Y")
+            if (MrQuoteResources.configuration.GetSection("ByPass:sendMail").Value == "Y")
             {
-                string smtpServerAddress = UMSResources.configuration.GetSection("smtp:smtpServerAddress").Value;
-                int smtpServerPort = Convert.ToInt32(UMSResources.configuration.GetSection("smtp:smtpServerPort").Value);
-                string smtpServerUserId = UMSResources.configuration.GetSection("smtp:smtpServerUserId").Value;
-                string smtpServerPassword = UMSResources.configuration.GetSection("smtp:smtpServerPassword").Value;
-                string emailFromAddress = UMSResources.configuration.GetSection("smtp:emailFromAddress").Value;
-                string displayName = UMSResources.configuration.GetSection("smtp:displayName").Value;
+                string smtpServerAddress = MrQuoteResources.configuration.GetSection("smtp:smtpServerAddress").Value;
+                int smtpServerPort = Convert.ToInt32(MrQuoteResources.configuration.GetSection("smtp:smtpServerPort").Value);
+                string smtpServerUserId = MrQuoteResources.configuration.GetSection("smtp:smtpServerUserId").Value;
+                string smtpServerPassword = MrQuoteResources.configuration.GetSection("smtp:smtpServerPassword").Value;
+                string emailFromAddress = MrQuoteResources.configuration.GetSection("smtp:emailFromAddress").Value;
+                string displayName = MrQuoteResources.configuration.GetSection("smtp:displayName").Value;
                 try
                 {
                     MailMessage mail = new MailMessage

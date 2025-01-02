@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace MrGutter.Domain
+namespace MrQuote.Domain
 {
     public class SP
     {

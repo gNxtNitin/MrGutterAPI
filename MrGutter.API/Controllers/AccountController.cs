@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MrGutter.Domain.Models.RequestModel;
-using MrGutter.Services.IServices;
-using MrGutter.Services.Services;
+using MrQuote.Domain.Models.RequestModel;
+using MrQuote.Services.IServices;
+using MrQuote.Services.Services;
 
-namespace MrGutter.API.Controllers
+namespace MrQuote.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
