@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MrQuote.Services\MrQuote.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="AuthLibrary">
+      <HintPath>..\MrQuote.Services\References\AuthLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="MenuManagementLib">
+      <HintPath>..\MrQuote.Services\References\MenuManagementLib.dll</HintPath>
+    </Reference>
+    <Reference Include="PasswordManagementLibrary">
+      <HintPath>..\MrQuote.Services\References\PasswordManagementLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="UserManagementLibrary">
+      <HintPath>..\MrQuote.Services\References\UserManagementLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
