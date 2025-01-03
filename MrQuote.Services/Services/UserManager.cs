@@ -165,7 +165,7 @@ namespace MrQuote.Services.Services
         {
             ResponseModel response = new ResponseModel();
             //string flag = roleId.HasValue ? "I" : "G";
-            string userId = encReq;
+            string userId = await encDcService.Decrypt(encReq);
             string flag = userId == null || userId == "" ? "G" : "I";
             try
             {
