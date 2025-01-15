@@ -94,7 +94,7 @@ namespace MrQuote.Services.Services
             string json = await encDcService.Decrypt(encReq.V);
             UserMasterReqModel usermodel = JsonConvert.DeserializeObject<UserMasterReqModel>(json);
             RequestModel req = new RequestModel();
-            req.MobileOrEmail = usermodel.EmailID;
+            req.MobileOrEmail = usermodel.Email;
             string connStr = MrQuoteResources.GetConnectionString();
             ResponseModel response = new ResponseModel();
             try

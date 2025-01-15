@@ -57,7 +57,7 @@ namespace MrQuote.WebAPI.Controllers
         }
         #endregion
         #region "Role Master"
-        [Authorize(Roles = "SuperAdmin")]
+        //[Authorize(Roles = "SuperAdmin")]
         [HttpGet("GetRoles")]
         public async Task<IActionResult> GetRoleMasters(string? encReq)
         {
@@ -98,7 +98,7 @@ namespace MrQuote.WebAPI.Controllers
         #endregion
 
         #region "UserMaster"
-        [Authorize]
+        //[Authorize]
         [HttpGet("GetUsers")]
         public async Task<IActionResult> GetUsers(string? userId)
         {
@@ -114,14 +114,14 @@ namespace MrQuote.WebAPI.Controllers
         #endregion
 
         #region "CompanyMaster"
-        [Authorize]
+       // [Authorize]
         [HttpGet("GetCompany")]
         public async Task<IActionResult> GetCompany(string? companyId)
         {
             var result = await _userManager.GetCompany(companyId);
             return result == null ? NotFound() : Ok(result);
         }
-        [Authorize]
+       // [Authorize]
         [HttpPost("CreateOrSetCompany")]
         public async Task<IActionResult> CreateOrSetCompany(CompanyReqModel req)
         {

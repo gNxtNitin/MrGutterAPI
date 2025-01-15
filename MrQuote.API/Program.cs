@@ -29,6 +29,9 @@ builder.Services.AddScoped<IPasswordRepository, PasswordRepository>(); //Passwor
 builder.Services.AddScoped<IMenuManagementService, MenuManagementService>(); //MenuManagementLib
 builder.Services.AddScoped<IUserManagerService, UserManagerService>(); //UserManagementLibrary
 
+builder.Services.AddScoped< ILayoutService,LayoutService>();
+builder.Services.AddScoped<IEstimateService, EstimateService>();
+
 #region "JWT Token"
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {

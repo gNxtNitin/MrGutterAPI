@@ -318,8 +318,8 @@ namespace MrQuote.Services.Services
                 userReqModel.UserId = rq.UserId.ToString();
                 userReqModel.FirstName = rq.FirstName;
                 userReqModel.LastName = rq.LastName;
-                userReqModel.Mobile = rq.MobileNo;
-                userReqModel.Email = rq.EmailID;
+                userReqModel.Mobile = rq.Mobile;
+                userReqModel.Email = rq.Email;
                  userReqModel.DOB = "30/08/2000";
                 userReqModel.Password = rq.Password;
                 userReqModel.FilePath = rq.FilePath;

@@ -131,13 +131,14 @@ namespace MrQuote.Services.Services
             //string flag = roleId.HasValue ? "I" : "G";
             string roleId = await encDcService.Decrypt(encReq);
             string flag = roleId == null || roleId == "" ? "G" : "I";
+            string newRoleId = "0";
             try
             {
                 DataSet ds = new DataSet();
                 string connStr = MrQuoteResources.GetConnectionString();
                 ArrayList arrList = new ArrayList();
                 SP.spArgumentsCollection(arrList, "@Flag", flag, "CHAR", "I");
-                SP.spArgumentsCollection(arrList, "@RoleId", roleId ?? "0", "INT", "I");
+                SP.spArgumentsCollection(arrList, "@RoleId", newRoleId ?? "0", "INT", "I");
                 SP.spArgumentsCollection(arrList, "@Ret", "", "INT", "O");
                 SP.spArgumentsCollection(arrList, "@ErrorMsg", "", "VARCHAR", "O");
                 ds = SP.RunStoredProcedure(connStr, ds, "sp_GetSetDeleteRole", arrList);
@@ -339,11 +340,11 @@ namespace MrQuote.Services.Services
                         });
                         command.Parameters.Add(new SqlParameter("@mobile", SqlDbType.NVarChar, 255)
                         {
-                            Value = (object)req.MobileNo ?? DBNull.Value
+                            Value = (object)req.Mobile ?? DBNull.Value
                         });
                         command.Parameters.Add(new SqlParameter("@email", SqlDbType.NVarChar, 255)
                         {
-                            Value = (object)req.EmailID ?? DBNull.Value
+                            Value = (object)req.Email ?? DBNull.Value
                         });
                         command.Parameters.Add(new SqlParameter("@dob", SqlDbType.SmallDateTime, 255)
                         {
@@ -379,7 +380,7 @@ namespace MrQuote.Services.Services
                         });
                         command.Parameters.Add(new SqlParameter("@isActive", SqlDbType.NVarChar, 255)
                         {
-                            Value = (object)req.IsActive ?? DBNull.Value
+                            Value = (object)req.isActive ?? DBNull.Value
                         });
                         command.Parameters.Add(new SqlParameter("@createdBy", SqlDbType.Int)
                         {
