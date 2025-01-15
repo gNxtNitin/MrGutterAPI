@@ -121,7 +121,6 @@ namespace MrQuote.Services.Services
             }
             return response;
         }
-
         public async Task<ResponseModel> GetEstimate(EstimateQueryParameters req)
         {
             ResponseModel response = new ResponseModel();

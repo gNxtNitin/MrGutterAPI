@@ -304,11 +304,19 @@ namespace MrQuote.Services.Services
             string connStr = MrQuoteResources.GetConnectionString();
             try
             {
+                string encPassword = req.Password ?? "";
+                if (req.Password == null || req.Password=="")
+                {
+                    encPassword = await encDcService.Encrypt(req.FirstName + "@123");
+                }
+                 
                 using (SqlConnection connection = new SqlConnection(connStr))
                 {
+                    
                     await connection.OpenAsync();
                     using (SqlCommand command = new SqlCommand("sp_GetSetDeleteUsers", connection))
                     {
+                       
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.Add(new SqlParameter("@Flag", SqlDbType.Char)
                         {
@@ -318,10 +326,10 @@ namespace MrQuote.Services.Services
                         {
                             Value = (object)req.UserId ?? 0
                         });
-                        //command.Parameters.Add(new SqlParameter("@groupId", SqlDbType.Int)
-                        //{
-                        //    Value = (object)req.GroupId ?? 0
-                        //});
+                        command.Parameters.Add(new SqlParameter("@companyId", SqlDbType.Int)
+                        {
+                            Value = (object)req.CompanyId ?? 0
+                        });
                         command.Parameters.Add(new SqlParameter("@roleId", SqlDbType.Int)
                         {
                             Value = (object)req.RoleId ?? 0
@@ -352,7 +360,7 @@ namespace MrQuote.Services.Services
                         });
                         command.Parameters.Add(new SqlParameter("@password", SqlDbType.NVarChar, 255)
                         {                                            
-                            Value = (object)req.Password ?? DBNull.Value
+                            Value = encPassword
                         });
                         command.Parameters.Add(new SqlParameter("@address1", SqlDbType.NVarChar, 255)
                         {
