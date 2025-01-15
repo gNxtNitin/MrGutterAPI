@@ -46,6 +46,10 @@ namespace MrQuote.Services.Services
                         {
                             Value = (object)req.CompanyID ?? 0
                         });
+                        command.Parameters.Add(new SqlParameter("@EstimatorID", SqlDbType.Int)
+                        {
+                            Value = (object)req.UserID ?? 0
+                        });
                         command.Parameters.Add(new SqlParameter("@StatusID", SqlDbType.Int)
                         {
                             Value = (object)req.StatusID ?? 0
@@ -53,6 +57,18 @@ namespace MrQuote.Services.Services
                         command.Parameters.Add(new SqlParameter("@EstimateNo", SqlDbType.NVarChar, 150)
                         {
                             Value = (object)req.EstimateNo ?? DBNull.Value
+                        });
+                        command.Parameters.Add(new SqlParameter("@EstimateCreatedDate", SqlDbType.SmallDateTime)
+                        {
+                            Value = (object)req.EstimateCreatedDate ?? DBNull.Value
+                        });
+                        command.Parameters.Add(new SqlParameter("@EstimateRevenue", SqlDbType.Decimal)
+                        {
+                            Value = (object)req.EstimateRevenue ?? DBNull.Value
+                        });
+                        command.Parameters.Add(new SqlParameter("@NextCallDate", SqlDbType.SmallDateTime)
+                        {
+                            Value = (object)req.NextCallDate ?? DBNull.Value
                         });
                         command.Parameters.Add(new SqlParameter("@FirstName", SqlDbType.NVarChar, 150)
                         {

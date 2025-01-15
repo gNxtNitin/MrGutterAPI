@@ -12,7 +12,11 @@ namespace MrQuote.Domain.Models.RequestModel
         public string? Flag { get; set; }
         public int EstimateID { get; set; } = 0;
         public int StatusID { get; set; } = 0;
+        public int UserID { get; set; } = 0;    // Estimator ID
         public string? EstimateNo { get; set; }
+        public string? EstimateCreatedDate { get; set; }
+        public string? EstimateRevenue { get; set; }
+        public string? NextCallDate { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? Company { get; set; }
