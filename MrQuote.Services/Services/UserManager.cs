@@ -620,7 +620,7 @@ namespace MrQuote.Services.Services
                         });
                         command.Parameters.Add(new SqlParameter("@CompanyID", SqlDbType.Int)
                         {
-                            Value = (object)req.CompanyID ?? 0
+                            Value = (object)req.CompanyId ?? 0
                         });
                         command.Parameters.Add(new SqlParameter("@CompanyName", SqlDbType.NVarChar, 255)
                         {
@@ -628,19 +628,19 @@ namespace MrQuote.Services.Services
                         });
                         command.Parameters.Add(new SqlParameter("@PointOfContact", SqlDbType.NVarChar, 255)
                         {
-                            Value = (object)req.PointOfContact ?? DBNull.Value
+                            Value = (object)req.ContactPerson ?? DBNull.Value
                         });
                         command.Parameters.Add(new SqlParameter("@Email", SqlDbType.NVarChar, 255)
                         {
-                            Value = (object)req.Email ?? DBNull.Value
+                            Value = (object)req.CompanyEmail ?? DBNull.Value
                         });
                         command.Parameters.Add(new SqlParameter("@PhoneNumber", SqlDbType.NVarChar, 25)
                         {
-                            Value = (object)req.PhoneNumber ?? DBNull.Value
+                            Value = (object)req.CompanyPhone ?? DBNull.Value
                         });
                         command.Parameters.Add(new SqlParameter("@IsActive", SqlDbType.NVarChar, 255)
                         {
-                            Value = (object)req.IsActive ?? DBNull.Value
+                            Value = (object)req.isActive ?? DBNull.Value
                         });
                         command.Parameters.Add(new SqlParameter("@CreatedBy", SqlDbType.Int)
                         {

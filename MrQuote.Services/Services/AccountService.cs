@@ -279,7 +279,7 @@ namespace MrQuote.Services.Services
                 //System.IO.StreamReader file = new System.IO.StreamReader("ResetPassword.html");
                 //string _body = await file.ReadToEndAsync();
                 //file.Close();
-                //string email = await encDcService.Encrypt(req.MobileOrEmail);
+                string email = await encDcService.Encrypt(req.MobileOrEmail);
 
                 //// To manage the email body as per users
                 //string hostingURL = "https://localhost:7048/";
@@ -291,7 +291,7 @@ namespace MrQuote.Services.Services
 
               //  string encemail = await encDcService.Encrypt(req.MobileOrEmail);
                 var url = MrQuoteResources.configuration.GetSection("hosting:baseurl").Value;
-                string resetPasswordUrl = $"<a href='{url + "Account/ChangePassword?email=" + req.MobileOrEmail}'>SET PASSWORD</a>";
+                string resetPasswordUrl = $"<a href='{url + "Account/ChangePassword?email=" + email}'>SET PASSWORD</a>";
                 System.IO.StreamReader file = new System.IO.StreamReader("ResetPassword.html");
                 string _body = await file.ReadToEndAsync();
                 file.Close();
