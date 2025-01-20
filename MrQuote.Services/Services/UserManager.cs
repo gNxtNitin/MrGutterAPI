@@ -309,14 +309,11 @@ namespace MrQuote.Services.Services
                 {
                     encPassword = await encDcService.Encrypt(req.FirstName + "@123");
                 }
-                 
                 using (SqlConnection connection = new SqlConnection(connStr))
                 {
-                    
                     await connection.OpenAsync();
                     using (SqlCommand command = new SqlCommand("sp_GetSetDeleteUsers", connection))
                     {
-                       
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.Add(new SqlParameter("@Flag", SqlDbType.Char)
                         {
@@ -326,17 +323,13 @@ namespace MrQuote.Services.Services
                         {
                             Value = (object)req.UserId ?? 0
                         });
-                        command.Parameters.Add(new SqlParameter("@companyId", SqlDbType.Int)
-                        {
-                            Value = (object)req.CompanyId ?? 0
-                        });
-                        command.Parameters.Add(new SqlParameter("@roleId", SqlDbType.Int)
-                        {
-                            Value = (object)req.RoleId ?? 0
-                        });
-                        //command.Parameters.Add(new SqlParameter("@userName", SqlDbType.NVarChar, 100)
+                        //command.Parameters.Add(new SqlParameter("@companyId", SqlDbType.Int)
                         //{
-                        //    Value = (object)req.UserName ?? DBNull.Value
+                        //    Value = (object)req.CompanyId ?? 0
+                        //});
+                        //command.Parameters.Add(new SqlParameter("@roleId", SqlDbType.Int)
+                        //{
+                        //    Value = (object)req.RoleId ?? 0
                         //});
                         command.Parameters.Add(new SqlParameter("@firstName", SqlDbType.NVarChar, 255)
                         {
@@ -354,7 +347,7 @@ namespace MrQuote.Services.Services
                         {
                             Value = (object)req.Email ?? DBNull.Value
                         });
-                        command.Parameters.Add(new SqlParameter("@dob", SqlDbType.SmallDateTime, 255)
+                        command.Parameters.Add(new SqlParameter("@dob", SqlDbType.SmallDateTime)
                         {
                             Value = (object)req.DOB ?? DBNull.Value
                         });
@@ -407,6 +400,23 @@ namespace MrQuote.Services.Services
                         await command.ExecuteNonQueryAsync();
                         response.code = Convert.ToInt32(retParam.Value);
                         response.msg = Convert.ToString(errorMsgParam.Value);
+                    }
+                }
+
+                if (req.RoleList.Count != 0 && req.RoleList != null)
+                {
+                    foreach (var item in req.RoleList)
+                    {
+                        item.UserId = response.code;
+                        var res1 = CreateOrSetUserRole(item, req.CreatedBy);
+                    }
+                }
+                if (req.CompanyList.Count != 0 && req.CompanyList != null)
+                {
+                    foreach (var item in req.CompanyList)
+                    {
+                        item.UserId = response.code;
+                        var res1 = CreateOrSetUserCompany(item,req.CreatedBy);
                     }
                 }
             }
@@ -566,18 +576,17 @@ namespace MrQuote.Services.Services
 
             return await Task.FromResult(response);
         }
-
-        public async Task<ResponseModel> GetCompany(string? companyId)
+        public async Task<ResponseModel> GetCompany(string? userId)
         {
             ResponseModel response = new ResponseModel();
-            string flag = companyId == null || companyId == "" ? "G" : "I";
+            string flag = userId == null || userId == "" ? "G" : "I";
             try
             {
                 DataSet ds = new DataSet();
                 string connStr = MrQuoteResources.GetConnectionString();
                 ArrayList arrList = new ArrayList();
                 SP.spArgumentsCollection(arrList, "@Flag", flag, "CHAR", "I");
-                SP.spArgumentsCollection(arrList, "@CompanyID", companyId == "" ? "0" : companyId, "INT", "I");
+                SP.spArgumentsCollection(arrList, "@UserID", userId == "" ? "0" : userId, "INT", "I");
                 SP.spArgumentsCollection(arrList, "@Ret", "", "INT", "O");
                 SP.spArgumentsCollection(arrList, "@ErrorMsg", "", "VARCHAR", "O");
                 ds = SP.RunStoredProcedure(connStr, ds, "sp_GetSetDeleteCompany", arrList);
@@ -601,7 +610,6 @@ namespace MrQuote.Services.Services
             }
             return await Task.FromResult(response);
         }
-
         public async Task<ResponseModel> CreateOrSetCompany(CompanyReqModel req)
         {
             ResponseModel response = new ResponseModel();
@@ -645,6 +653,117 @@ namespace MrQuote.Services.Services
                         command.Parameters.Add(new SqlParameter("@CreatedBy", SqlDbType.Int)
                         {
                             Value = (object)req.CreatedBy ?? 0
+                        });
+                        SqlParameter retParam = new SqlParameter("@Ret", SqlDbType.Int)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        command.Parameters.Add(retParam);
+                        SqlParameter errorMsgParam = new SqlParameter("@ErrorMsg", SqlDbType.NVarChar, 200)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        command.Parameters.Add(errorMsgParam);
+                        await command.ExecuteNonQueryAsync();
+                        response.code = Convert.ToInt32(retParam.Value);
+                        response.msg = Convert.ToString(errorMsgParam.Value);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.code = -1;
+                response.msg = ex.Message;
+            }
+            return response;
+        }
+
+        public async Task<ResponseModel> CreateOrSetUserCompany(UserCompany userCompany, int createdBy)
+        {
+            ResponseModel response = new ResponseModel();
+            string connStr = MrQuoteResources.GetConnectionString();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connStr))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand("sp_GetSetDeleteUserCompany", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new SqlParameter("@Flag", SqlDbType.Char)
+                        {
+                            Value = "C"
+                        });
+                        command.Parameters.Add(new SqlParameter("@CompanyID", SqlDbType.Int)
+                        {
+                            Value = (object)userCompany.CompanyId ?? 0
+                        });
+                        command.Parameters.Add(new SqlParameter("@UserID", SqlDbType.Int)
+                        {
+                            Value = (object)userCompany.UserId ?? 0
+                        });
+                        command.Parameters.Add(new SqlParameter("@IsActive", SqlDbType.Bit)
+                        {
+                            Value = (object)userCompany.IsActive ?? 0
+                        });
+                        command.Parameters.Add(new SqlParameter("@CreatedBy", SqlDbType.Int)
+                        {
+                            Value = (object) createdBy ?? 0
+                        });
+                        SqlParameter retParam = new SqlParameter("@Ret", SqlDbType.Int)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        command.Parameters.Add(retParam);
+                        SqlParameter errorMsgParam = new SqlParameter("@ErrorMsg", SqlDbType.NVarChar, 200)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        command.Parameters.Add(errorMsgParam);
+                        await command.ExecuteNonQueryAsync();
+                        response.code = Convert.ToInt32(retParam.Value);
+                        response.msg = Convert.ToString(errorMsgParam.Value);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.code = -1;
+                response.msg = ex.Message;
+            }
+            return response;
+        }
+        public async Task<ResponseModel> CreateOrSetUserRole(UserRole userRole, int createdBy)
+        {
+            ResponseModel response = new ResponseModel();
+            string connStr = MrQuoteResources.GetConnectionString();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connStr))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand("sp_AssignRole", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new SqlParameter("@Flag", SqlDbType.Char)
+                        {
+                            Value = "C"
+                        });
+                        command.Parameters.Add(new SqlParameter("@RoleId", SqlDbType.Int)
+                        {
+                            Value = (object)userRole.RoleId ?? 0
+                        });
+                        command.Parameters.Add(new SqlParameter("@UserId", SqlDbType.Int)
+                        {
+                            Value = (object)userRole.UserId ?? 0
+                        });
+                        command.Parameters.Add(new SqlParameter("@IsActive", SqlDbType.Bit)
+                        {
+                            Value = (object)userRole.IsActive ?? 0
+                        });
+                        command.Parameters.Add(new SqlParameter("@CreatedBy", SqlDbType.Int)
+                        {
+                            Value = (object)createdBy ?? 0
                         });
                         SqlParameter retParam = new SqlParameter("@Ret", SqlDbType.Int)
                         {
