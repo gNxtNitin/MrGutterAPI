@@ -468,3 +468,10 @@
 /.vs/ProjectEvaluation/mrquote.api.metadata.v8.bin
 /.vs/ProjectEvaluation/mrquote.api.projects.v8.bin
 /.vs/ProjectEvaluation/mrquote.api.strings.v8.bin
+/MrQuote.API/obj/Release/net6.0
+/MrQuote.API/Properties/PublishProfiles
+/MrQuote.Domain/bin/Release/net6.0
+/MrQuote.Domain/obj/Release/net6.0
+/MrQuote.Services/obj/Release/net6.0
+/MrQuote.Utility/bin/Release/net6.0
+/MrQuote.Utility/obj/Release/net6.0
