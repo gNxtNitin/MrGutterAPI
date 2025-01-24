@@ -323,14 +323,6 @@ namespace MrQuote.Services.Services
                         {
                             Value = (object)req.UserId ?? 0
                         });
-                        //command.Parameters.Add(new SqlParameter("@companyId", SqlDbType.Int)
-                        //{
-                        //    Value = (object)req.CompanyId ?? 0
-                        //});
-                        //command.Parameters.Add(new SqlParameter("@roleId", SqlDbType.Int)
-                        //{
-                        //    Value = (object)req.RoleId ?? 0
-                        //});
                         command.Parameters.Add(new SqlParameter("@firstName", SqlDbType.NVarChar, 255)
                         {
                             Value = (object)req.FirstName ?? DBNull.Value
@@ -378,6 +370,10 @@ namespace MrQuote.Services.Services
                         command.Parameters.Add(new SqlParameter("@filepath", SqlDbType.NVarChar, 255)
                         {
                             Value = (object)req.FilePath ?? DBNull.Value
+                        });
+                        command.Parameters.Add(new SqlParameter("@userStatus", SqlDbType.NVarChar, 15)
+                        {
+                            Value = (object)req.UserStatus ?? DBNull.Value
                         });
                         command.Parameters.Add(new SqlParameter("@isActive", SqlDbType.NVarChar, 255)
                         {
@@ -576,10 +572,12 @@ namespace MrQuote.Services.Services
 
             return await Task.FromResult(response);
         }
-        public async Task<ResponseModel> GetCompany(string? userId)
+        public async Task<ResponseModel> GetCompany(string? userId, string? companyId)
         {
             ResponseModel response = new ResponseModel();
             string flag = userId == null || userId == "" ? "G" : "I";
+            if(companyId != null || companyId != "") { flag = "I"; }
+            if(companyId == null && userId == null) { flag = "G"; }
             try
             {
                 DataSet ds = new DataSet();
@@ -587,6 +585,7 @@ namespace MrQuote.Services.Services
                 ArrayList arrList = new ArrayList();
                 SP.spArgumentsCollection(arrList, "@Flag", flag, "CHAR", "I");
                 SP.spArgumentsCollection(arrList, "@UserID", userId == "" ? "0" : userId, "INT", "I");
+                SP.spArgumentsCollection(arrList, "@CompanyID", companyId == "" ? "0" : companyId, "INT", "I");
                 SP.spArgumentsCollection(arrList, "@Ret", "", "INT", "O");
                 SP.spArgumentsCollection(arrList, "@ErrorMsg", "", "VARCHAR", "O");
                 ds = SP.RunStoredProcedure(connStr, ds, "sp_GetSetDeleteCompany", arrList);

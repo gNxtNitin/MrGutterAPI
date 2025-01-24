@@ -116,9 +116,9 @@ namespace MrQuote.WebAPI.Controllers
         #region "CompanyMaster"
        // [Authorize]
         [HttpGet("GetCompany")]
-        public async Task<IActionResult> GetCompany(string? companyId)
+        public async Task<IActionResult> GetCompany(string? userId, string? companyId)
         {
-            var result = await _userManager.GetCompany(companyId);
+            var result = await _userManager.GetCompany(userId, companyId);
             return result == null ? NotFound() : Ok(result);
         }
        // [Authorize]

@@ -12,7 +12,22 @@ namespace MrQuote.Domain.Models.RequestModel
         public int LayoutID { get; set; } = 0;
         public string? LayoutName { get; set; }
         public bool IsShared { get; set; }
+        public bool IsDefault { get; set; }
         public int CompanyID { get; set; }
         public int CreatedBy { get; set; }
+    }
+    public class LayoutQueryParameters
+    {
+        public string? Flag { get; set; }
+        public int UserId { get; set; } = 0;
+        public int CompanyID { get; set; } = 0;
+        public int EstimateID { get; set; } = 0;
+        //public string? Search { get; set; } // For keyword search
+        //public string? FilterBy { get; set; } // Example: "Status", "Category"
+        //public string? FilterValue { get; set; } // Example: "Active", "Electronics"
+        //public string? SortBy { get; set; } // Example: "Name", "CreatedDate"
+        //public bool SortDescending { get; set; } = false; // Sort direction
+        //public int PageNumber { get; set; } = 1; // Pagination: Page number
+        //public int PageSize { get; set; } = 10; // Pagination: Page size
     }
 }

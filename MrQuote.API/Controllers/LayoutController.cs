@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MrQuote.Domain.Models.RequestModel;
 using MrQuote.Services.IServices;
+using MrQuote.Services.Services;
 
 namespace MrQuote.API.Controllers
 {
@@ -21,6 +22,12 @@ namespace MrQuote.API.Controllers
         {
             var result = await _layoutService.CreateOrSetLayout(req);
             return Ok(result);
+        }
+        [HttpGet("GetLayout")]
+        public async Task<IActionResult> GetLayout(int companyId)
+        {
+            var result = await _layoutService.GetLayout(companyId);
+            return result == null ? NotFound() : Ok(result);
         }
     }
 }

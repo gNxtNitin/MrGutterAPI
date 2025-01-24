@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace MrQuote.Services.IServices
 {
-    public interface ILayoutService
+    public interface IConfigurationService
     {
-        Task<ResponseModel> CreateOrSetLayout(LayoutReqModel req);
-        Task<ResponseModel> GetLayout(int companyId);
+        Task<ResponseModel> CreateOrSetBranding(BrandingReqModel req);
+        Task<ResponseModel> GetBrandings(int companyId);
+        Task<ResponseModel> GetCompanyTheme(int companyId);
     }
 }

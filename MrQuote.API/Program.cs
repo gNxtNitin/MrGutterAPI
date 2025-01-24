@@ -31,6 +31,7 @@ builder.Services.AddScoped<IUserManagerService, UserManagerService>(); //UserMan
 
 builder.Services.AddScoped< ILayoutService,LayoutService>();
 builder.Services.AddScoped<IEstimateService, EstimateService>();
+builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 
 #region "JWT Token"
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
