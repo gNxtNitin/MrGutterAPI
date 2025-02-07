@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MrQuote.Domain.Models.RequestModel;
 using MrQuote.Domain.Models;
+using System.Data;
 
 namespace MrQuote.Services.IServices
 {
@@ -21,6 +22,12 @@ namespace MrQuote.Services.IServices
         public Task<ResponseModel> CreateOrSetCompany(CompanyReqModel rq);
         public Task<ResponseModel> CreateLogHistory(RequestModel req);
         public Task<ResponseModel> GetLogHistory();
+        public Task<ResponseModel> GetIntroPages();
+
+        public Task<ResponseModel> Get_API_0_Data(string? userId);
+        public Task<ResponseModel> Get_API_1_Retrieve_Data(string? userId);
+
+        public Task<ResponseModel> Get_API_2_Upload_Data(string? userId,DataSet ds);
     }
 
 }

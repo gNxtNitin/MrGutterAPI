@@ -15,6 +15,8 @@ using Newtonsoft.Json;
 using MrQuote.Domain.Models.RequestModel;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace MrQuote.Services.Services
 {
@@ -279,9 +281,10 @@ namespace MrQuote.Services.Services
                 ds = SP.RunStoredProcedure(connStr, ds, "sp_GetSetDeleteUsers", arrList);
                 if (ds.Tables[0].Rows.Count > 0 && !string.IsNullOrWhiteSpace(ds.Tables[0].Rows[0]["UserID"]?.ToString()))
                 {
-                    ds.Tables[0].TableName = "Users";
+                    // ds.Tables[0].TableName = "Users";
                     response.code = 200;
-                    response.data = _miscDataSetting.ConvertToJSON(ds.Tables[0]);
+                    //response.data = _miscDataSetting.ConvertToJSON(ds.Tables[0]);
+                    response.data = JsonConvert.SerializeObject(ds.Tables[0]); //in this way, in the response, the table name as 'Layouts and the key name as 'Table' is removed; now the response is a string starting from array of objects without table name.
                     response.msg = "Success";
                 }
                 else
@@ -350,7 +353,7 @@ namespace MrQuote.Services.Services
                             Value = (object)req.DOB ?? DBNull.Value
                         });
                         command.Parameters.Add(new SqlParameter("@password", SqlDbType.NVarChar, 255)
-                        {                                            
+                        {
                             Value = (object)req.Password ?? DBNull.Value
                         });
                         command.Parameters.Add(new SqlParameter("@address1", SqlDbType.NVarChar, 255)
@@ -400,6 +403,52 @@ namespace MrQuote.Services.Services
                         response.msg = Convert.ToString(errorMsgParam.Value);
                     }
                 }
+                //using (SqlConnection connection = new SqlConnection(connStr))
+                //{
+                //    await connection.OpenAsync();
+                //    using (SqlCommand command = new SqlCommand("sp_GetSetDeleteUsers", connection))
+                //    {
+                //        command.CommandType = CommandType.StoredProcedure;
+
+                //        // Helper function to add parameters
+                //        void AddParameter(string name, SqlDbType type, object value, int size = 0, ParameterDirection direction = ParameterDirection.Input)
+                //        {
+                //            var param = new SqlParameter(name, type) { Value = value ?? DBNull.Value, Direction = direction };
+                //            if (size > 0) param.Size = size;
+                //            command.Parameters.Add(param);
+                //        }
+
+                //        // Adding parameters
+                //        AddParameter("@Flag", SqlDbType.Char, req.Flag ?? "G");
+                //        AddParameter("@userId", SqlDbType.Int, req.UserId ?? 0);
+                //        AddParameter("@roleId", SqlDbType.Int, req.RoleId ?? 0);
+                //        AddParameter("@firstName", SqlDbType.NVarChar, req.FirstName, 255);
+                //        AddParameter("@lastName", SqlDbType.NVarChar, req.LastName, 255);
+                //        AddParameter("@mobile", SqlDbType.NVarChar, req.MobileNo, 255);
+                //        AddParameter("@email", SqlDbType.NVarChar, req.EmailID, 255);
+                //        AddParameter("@dob", SqlDbType.SmallDateTime, req.DOB);
+                //        AddParameter("@password", SqlDbType.NVarChar, req.Password, 255);
+                //        AddParameter("@address1", SqlDbType.NVarChar, req.Address1, 255);
+                //        AddParameter("@address2", SqlDbType.NVarChar, req.Address2, 255);
+                //        AddParameter("@city", SqlDbType.NVarChar, req.City, 255);
+                //        AddParameter("@state", SqlDbType.NVarChar, req.State, 255);
+                //        AddParameter("@pin", SqlDbType.NVarChar, req.PinCode, 255);
+                //        AddParameter("@filepath", SqlDbType.NVarChar, req.FilePath, 255);
+                //        AddParameter("@isActive", SqlDbType.NVarChar, req.IsActive, 255);
+                //        AddParameter("@createdBy", SqlDbType.Int, req.CreatedBy?? 0);
+
+                //        // Output parameters
+                //        AddParameter("@ret", SqlDbType.Int, null, direction: ParameterDirection.Output);
+                //        AddParameter("@errorMsg", SqlDbType.NVarChar, null, 200, ParameterDirection.Output);
+
+                //        await command.ExecuteNonQueryAsync();
+
+                //        response.code = Convert.ToInt32(command.Parameters["@ret"].Value);
+                //        response.msg = Convert.ToString(command.Parameters["@errorMsg"].Value);
+                //    }
+                //}
+
+
             }
             catch (Exception ex)
             {
@@ -660,5 +709,285 @@ namespace MrQuote.Services.Services
             }
             return response;
         }
+
+        public async Task<ResponseModel> Get_API_0_Data(string? userId)
+        {
+            ResponseModel response = new ResponseModel();
+            string flag = userId == null || userId == "" ? "G" : "I";
+            try
+            {
+                DataSet ds = new DataSet();
+                string connStr = MrQuoteResources.GetConnectionString();
+                ArrayList arrList = new ArrayList();
+
+                var tableAliasMapping = new Dictionary<string, string>
+        {
+            { "Table", "Users" },
+            { "Table1", "Roles" },
+            { "Table2", "UserRoles" },
+            { "Table3", "Company" },
+            { "Table4", "UserCompany" },
+            { "Table5", "Layout" },
+            { "Table6", "UserLayout" },
+            { "Table7", "Pages" },
+            { "Table8", "LayoutPages" },
+            { "Table9", "TitlePageContent" },
+            { "Table10", "IntroductionPageContent" },
+            { "Table11", "TermConditionsPageContent" },
+            { "Table12", "WarrantyPageContent" },
+            { "Table13", "AuthorizationPageContent" },
+            { "Table14", "InspectionPageContent" },
+            { "Table15", "InspectionPageSection" },
+            { "Table16", "InspectionSectionItems" },
+            { "Table17", "QuotePagePriceSection" },
+            { "Table18", "QuotePageSection" },
+            { "Table19", "QuotePageContent" },
+            { "Table20", "ProductsPricing" },
+            { "Table21", "SectionStyle" },
+            { "Table22", "Templates" },
+            { "Table23", "TemplatePages" },
+            { "Table24", "TemplatesCategory" },
+            { "Table25", "MeasurementCategory" },
+            { "Table26", "UnitOfMeasurement" },
+            { "Table27", "MeasurementToken" },
+            { "Table28", "AuthPagePriceSection" },
+            { "Table29", "AuthPrimarySigner" },
+            { "Table30", "AuthProductSelection" }
+        };
+
+
+                SP.spArgumentsCollection(arrList, "@Flag", flag, "CHAR", "I");
+                SP.spArgumentsCollection(arrList, "@userId", userId == "" ? "0" : userId, "INT", "I");
+                SP.spArgumentsCollection(arrList, "@Ret", "", "INT", "O");
+                SP.spArgumentsCollection(arrList, "@ErrorMsg", "", "VARCHAR", "O");
+
+                ds = SP.RunStoredProcedure(connStr, ds, "sp_API_0_getData", arrList);
+
+                //if (ds.Tables[0].Rows.Count > 0 && !string.IsNullOrWhiteSpace(ds.Tables[0].Rows[0]["LayoutID"]?.ToString()))
+                if (ds.Tables[0].Rows.Count > 0 && ds.Tables != null)
+                {
+                    //ds.Tables[0].TableName = "Layouts";
+                    foreach (DataTable dt in ds.Tables)
+                    {
+
+                        if (tableAliasMapping.ContainsKey(dt.TableName))
+                        {
+                            dt.TableName = tableAliasMapping[dt.TableName];
+                        }
+                    }
+
+                    ManageFetchHistory(Convert.ToInt32(userId));
+
+                    response.code = 200;
+                    //response.data = _miscDataSetting.ConvertToJSON(ds.Tables[0]);
+
+                    response.data = JsonConvert.SerializeObject(ds);  //in this way, in the response, the table name as 'Layouts and the key name as 'Table' is removed; now the response is a string starting from array of objects without table name.
+                    response.msg = "Success";
+                }
+                else
+                {
+                    response.code = -2;
+                    response.msg = "No data found.";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.code = -3;
+                response.msg = ex.Message;
+                // _logger.LogError("GetGroup", ex);
+            }
+
+            return await Task.FromResult(response);
+        }
+
+
+        public async Task<ResponseModel> GetIntroPages()
+        {
+            ResponseModel response = new ResponseModel();
+            try
+            {
+
+                DataSet ds = new DataSet();
+                string connStr = MrQuoteResources.GetConnectionString();
+                ArrayList arrList = new ArrayList();
+                SP.spArgumentsCollection(arrList, "@Flag", "G", "CHAR", "I");
+                SP.spArgumentsCollection(arrList, "@Ret", "", "INT", "O");
+                SP.spArgumentsCollection(arrList, "@ErrorMsg", "", "VARCHAR", "O");
+                ds = SP.RunStoredProcedure(connStr, ds, "sp_GetIntroPages", arrList);
+
+                if (ds.Tables[0].Rows.Count > 0 && ds.Tables != null)
+                {
+                    //ds.Tables[0].TableName = "Layouts";
+                    response.code = 200;
+                    //response.data = _miscDataSetting.ConvertToJSON(ds.Tables[0]);
+                    response.data = JsonConvert.SerializeObject(ds.Tables[0]);  //in this way, in the response, the table name as 'Layouts and the key name as 'Table' is removed; now the response is a string starting from array of objects without table name.
+                    response.msg = "Success";
+                }
+                else
+                {
+                    response.code = -2;
+                    response.msg = "No data found.";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.code = -3;
+                response.msg = ex.Message;
+                // _logger.LogError("GetGroup", ex);
+            }
+
+            return await Task.FromResult(response);
+        }
+
+
+
+        public async Task<ResponseModel> Get_API_1_Retrieve_Data(string? userId)
+        {
+            ResponseModel response = new ResponseModel();
+            string flag = userId == null || userId == "" ? "G" : "I";
+            try
+            {
+                DataSet ds = new DataSet();
+                string connStr = MrQuoteResources.GetConnectionString();
+                ArrayList arrList = new ArrayList();
+
+                var tableAliasMapping = new Dictionary<string, string>
+        {
+            { "Table", "Company" },
+            { "Table1", "Report" },
+            { "Table2", "Templates" },
+            { "Table3", "TemplatePages" },
+            { "Table4", "QuotePageContent" },
+            { "Table5", "QuotePagePriceSection" }
+        };
+
+                SP.spArgumentsCollection(arrList, "@Flag", flag, "CHAR", "I");
+                SP.spArgumentsCollection(arrList, "@userId", userId == "" ? "0" : userId, "INT", "I");
+                SP.spArgumentsCollection(arrList, "@Ret", "", "INT", "O");
+                SP.spArgumentsCollection(arrList, "@ErrorMsg", "", "VARCHAR", "O");
+
+                ds = SP.RunStoredProcedure(connStr, ds, "sp_API_1_RetrieveData", arrList);
+
+                //if (ds.Tables[0].Rows.Count > 0 && !string.IsNullOrWhiteSpace(ds.Tables[0].Rows[0]["LayoutID"]?.ToString()))
+                if (ds.Tables[0].Rows.Count > 0 && ds.Tables != null)
+                {
+                    foreach (DataTable dt in ds.Tables)
+                    {
+
+                        if (tableAliasMapping.ContainsKey(dt.TableName))
+                        {
+                            dt.TableName = tableAliasMapping[dt.TableName];
+                        }
+                    }
+
+                    ManageFetchHistory(Convert.ToInt32(userId));
+
+                    response.code = 200;
+                    //response.data = _miscDataSetting.ConvertToJSON(ds.Tables[0]);
+
+                    response.data = JsonConvert.SerializeObject(ds);  //in this way, in the response, the table name as 'Layouts and the key name as 'Table' is removed; now the response is a string starting from array of objects without table name.
+                    response.msg = "Success";
+                }
+                else
+                {
+                    response.code = -2;
+                    response.msg = "No data found.";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.code = -3;
+                response.msg = ex.Message;
+                // _logger.LogError("GetGroup", ex);
+            }
+
+            return await Task.FromResult(response);
+        }
+
+
+        public async Task<ResponseModel> Get_API_2_Upload_Data(string? userId, DataSet ds1)
+        {
+            ResponseModel response = new ResponseModel();
+            string flag = userId == null || userId == "" ? "G" : "I";
+            try
+            {
+                DataSet ds = new DataSet();
+                string connStr = MrQuoteResources.GetConnectionString();
+                ArrayList arrList = new ArrayList();
+
+
+
+                SP.spArgumentsCollection(arrList, "@Flag", flag, "CHAR", "I");
+                SP.spArgumentsCollection(arrList, "@userId", userId == "" ? "0" : userId, "INT", "I");
+                SP.spArgumentsCollection(arrList, "@Ret", "", "INT", "O");
+                SP.spArgumentsCollection(arrList, "@ErrorMsg", "", "VARCHAR", "O");
+
+                ds = SP.RunStoredProcedure(connStr, ds, "sp_API_2_UploadData", arrList);
+
+                //if (ds.Tables[0].Rows.Count > 0 && !string.IsNullOrWhiteSpace(ds.Tables[0].Rows[0]["LayoutID"]?.ToString()))
+                if (ds.Tables[0].Rows.Count > 0 && ds.Tables != null)
+                {
+                    //ds.Tables[0].TableName = "Layouts";
+
+                    ManageFetchHistory(Convert.ToInt32(userId));
+
+                    response.code = 200;
+                    //response.data = _miscDataSetting.ConvertToJSON(ds.Tables[0]);
+
+                    response.data = JsonConvert.SerializeObject(ds);
+                    response.msg = "Success";
+                }
+                else
+                {
+                    response.code = -2;
+                    response.msg = "No data found.";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.code = -3;
+                response.msg = ex.Message;
+                // _logger.LogError("GetGroup", ex);
+            }
+
+            return await Task.FromResult(response);
+        }
+
+        private static async void ManageFetchHistory(int userId)
+        {
+
+            string connStr = MrQuoteResources.GetConnectionString();
+            ResponseModel response = new ResponseModel();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connStr))
+                {
+                    await connection.OpenAsync();
+
+                    using (SqlCommand command = new SqlCommand("sp_IOSFetchHistory", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        // Adding parameters
+                        command.Parameters.Add(new SqlParameter("@userId", SqlDbType.Int) { Value = userId });
+                        command.Parameters.Add(new SqlParameter("@ret", SqlDbType.TinyInt) { Direction = ParameterDirection.Output });
+                        command.Parameters.Add(new SqlParameter("@errorCode", SqlDbType.VarChar, 200) { Direction = ParameterDirection.Output });
+
+                        await command.ExecuteNonQueryAsync();
+
+                        // Retrieving output values
+                        response.code = Convert.ToInt32(command.Parameters["@ret"].Value);
+                        response.msg = command.Parameters["@errorCode"].Value.ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.code = -1;
+                response.data = ex.Message;
+                // _logger.LogError("SetVerificationCode", ex);
+            }
+        }
+
     }
 }
